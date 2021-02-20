@@ -3,6 +3,7 @@ package epl341;
 /**
  * 
  * This object represents a typical block in the puzzle
+ *
  * 
  * @author mbofos01
  *
