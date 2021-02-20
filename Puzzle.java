@@ -1,4 +1,4 @@
-package epl341;
+package epl341.SlidingPuzzle;
 
 /**
  * The Puzzle object represents the actual sliding block puzzle according to the

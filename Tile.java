@@ -1,4 +1,4 @@
-package epl341;
+package epl341.SlidingPuzzle;
 
 /**
  * 
