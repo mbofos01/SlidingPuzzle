@@ -207,15 +207,28 @@ public class Puzzle {
 	 * 
 	 * @param fringe
 	 */
-	public void calculatePossibleMoves(ArrayList<Puzzle> fringe) {
-
-		// fringe.add(duplicate);
+	public void calculatePossibleMoves(ArrayList<Table> fringe) {
+		Puzzle temp;
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++) {
+				temp = this.duplicate();
+				if (i != j)
+					if (temp.validMove(i, j)) {
+						int c = temp.move(i, j);
+						Table t = new Table(temp.duplicate(), c);
+						fringe.add(t);
+					}
+			}
+		for (Table s : fringe)
+			s.puzzle.print();
 
 	}
 
 	public static void main(String[] args) {
 		Puzzle p = new Puzzle();
 		p.print();
+		ArrayList<Table> fringe = new ArrayList<Table>();
+		p.calculatePossibleMoves(fringe);
 
 	}
 
