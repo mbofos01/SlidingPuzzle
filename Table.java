@@ -36,34 +36,42 @@ public class Table {
 		for (int i = 1; i <= table.puzzle.getSize(); i++)
 			for (int j = 1; j <= table.puzzle.getSize(); j++) {
 				temp = table.puzzle.duplicate();
-				if (i != j)
-					if (temp.validMove(i, j)) {
-						int c = temp.move(i, j);
-						// temp.print();
-						if (!temp.equals(table.puzzle) && doesntExist(fringe, table.puzzle)) { // decrease cost if the
-																								// table exists
-							c += aStar.heuristic(table.puzzle);
-							// c += table.cost;
-							Table t = new Table(temp.duplicate(), c);
-							fringe.add(t);
-						}
-					}
+				if (temp.validMove(i, j)) {
+					int c = temp.move(i, j);
+					// temp.print();
+					Puzzle s = temp.duplicate();
+					// fringe.add(new Table(s, 0));
+					// System.out.println(exists(fringe, s));
+					if (exists(fringe, s)) {
+						// System.out.println("exists(fringe, s)");
+					} else
+						fringe.add(new Table(s, c));
+				}
 			}
 
 	}
 
-	private static boolean doesntExist(ArrayList<Table> fringe, Puzzle puzzle2) {
+	private static boolean exists(ArrayList<Table> fringe, Puzzle puzzle2) {
+		for (Table a : fringe)
+			if (puzzle2.equals(a.puzzle)) {
+				// puzzle2.print();
+				return true;
+			}
+		return false;
+	}
+
+	private static Table find(ArrayList<Table> fringe, Puzzle puzzle2) {
 		for (Table a : fringe)
 			if (a.puzzle.equals(puzzle2))
-				return false;
-		return true;
+				return a;
+		return null;
 	}
 
 	public static void main(String[] args) {
 		ArrayList<Table> fringe = new ArrayList<Table>();
-		calculatePossibleMoves(fringe, new Table(new Puzzle(3), 1));
+		calculatePossibleMoves(fringe, new Table(new Puzzle(5), 1));
 		for (Table s : fringe)
-			s.puzzle.print();
+			s.debbug();
 
 	}
 

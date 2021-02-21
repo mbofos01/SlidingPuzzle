@@ -6,12 +6,11 @@ public class aStar {
 	public ArrayList<Table> fringe = new ArrayList<>();
 
 	public aStar() {
-		fringe.add(new Table(new Puzzle(5), 1));
-		// fringe.add(new Table(new Puzzle(), 200));
+		Puzzle a = new Puzzle(7);
+		a.print();
+		fringe.add(new Table(a, 1));
+
 		Table.calculatePossibleMoves(fringe, fringe.get(0));
-		// sort();
-		// for (Table a : fringe)
-		// a.debbug();
 
 	}
 
@@ -33,35 +32,37 @@ public class aStar {
 
 	}
 
-	public Table getFirst() {
-		return fringe.get(0);
-	}
-
 	public static int heuristic(Puzzle p) {
-		return 0;
+		int cost = 0;
+		for (int i = 0; i < p.getSize() / 2; i++)
+			if (p.getPuzzle()[i].isBlack())
+				cost += ((p.getSize() - 1) / 2) - (i + 1);
+		return cost;
 	}
 
-	public void solve() {
-		while (true) {
-			sort();
-			Table t = getFirst();
-			fringe.remove(t);
-			t.puzzle.print();
-			if (t.puzzle.solved()) {
-				t.puzzle.print();
-				System.exit(0);
+	public void test() {
+		for (int i = 0; i > -1; i++) {
+			Table A = fringe.get(0);
 
+			Table t = new Table(A.puzzle.duplicate(), A.cost);
+
+			if (A.puzzle.solved()) {
+				System.out.println("Solution:");
+				A.puzzle.print();
+				return;
 			}
 			Table.calculatePossibleMoves(fringe, t);
-			t.cost = Integer.MAX_VALUE;
+			fringe.remove(0);
+			t.cost = 100;
 			fringe.add(t);
+			sort();
 		}
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Start");
+		System.out.println("Start:");
 		aStar star = new aStar();
-		star.solve();
+		star.test();
 
 	}
 

@@ -219,17 +219,25 @@ public class Puzzle {
 
 	@Override
 	public boolean equals(Object obj) {
-
+		// System.out.println("CHECKING");
 		Puzzle other = (Puzzle) obj;
-		if (!Arrays.equals(puzzle, other.puzzle))
-			return false;
+		for (int i = 0; i < size; i++) {
+			// System.out.println(puzzle[i].getType() + " " + other.puzzle[i].getType());
+			if (puzzle[i].getType() != other.puzzle[i].getType())
+				return false;
+		}
 		return true;
 	}
 
 	public static void main(String[] args) {
 		Puzzle p = new Puzzle();
+		Puzzle pa = new Puzzle();
 		p.print();
-		ArrayList<Table> fringe = new ArrayList<Table>();
+		pa.move(3, 4);
+		pa.move(4, 3);
+		pa.print();
+		if (p.equals(pa))
+			System.out.println("SAME");
 		// p.calculatePossibleMoves(fringe);
 
 	}
