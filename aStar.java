@@ -53,6 +53,8 @@ public class aStar {
 
 			}
 			Table.calculatePossibleMoves(fringe, t);
+			t.cost = Integer.MAX_VALUE;
+			fringe.add(t);
 		}
 	}
 

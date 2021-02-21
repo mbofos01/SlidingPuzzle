@@ -53,8 +53,8 @@ public class Table {
 	private static boolean doesntExist(ArrayList<Table> fringe, Puzzle puzzle2) {
 		for (Table a : fringe)
 			if (a.puzzle.equals(puzzle2))
-				return true;
-		return false;
+				return false;
+		return true;
 	}
 
 }
