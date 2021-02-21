@@ -217,6 +217,9 @@ public class Puzzle {
 		return true;
 	}
 
+	/**
+	 * Typical equals method
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		// System.out.println("CHECKING");
