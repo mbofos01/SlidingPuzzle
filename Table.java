@@ -39,7 +39,7 @@ public class Table {
 				if (i != j)
 					if (temp.validMove(i, j)) {
 						int c = temp.move(i, j);
-						if (!temp.equals(table.puzzle) && doesntExit(fringe, table.puzzle)) {
+						if (!temp.equals(table.puzzle) && doesntExist(fringe, table.puzzle)) {
 							c += aStar.heuristic(table.puzzle);
 							c += table.cost;
 							Table t = new Table(temp.duplicate(), c);
@@ -50,7 +50,7 @@ public class Table {
 
 	}
 
-	private static boolean doesntExit(ArrayList<Table> fringe, Puzzle puzzle2) {
+	private static boolean doesntExist(ArrayList<Table> fringe, Puzzle puzzle2) {
 		for (Table a : fringe)
 			if (a.puzzle.equals(puzzle2))
 				return true;
