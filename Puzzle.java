@@ -215,6 +215,7 @@ public class Puzzle {
 				if (i != j)
 					if (temp.validMove(i, j)) {
 						int c = temp.move(i, j);
+						c += aStar.heuristic(this);
 						Table t = new Table(temp.duplicate(), c);
 						fringe.add(t);
 					}
