@@ -1,6 +1,7 @@
 package epl341.SlidingPuzzle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The Puzzle object represents the actual sliding block puzzle according to the
@@ -42,6 +43,22 @@ public class Puzzle {
 		this(7);
 	}
 
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public Tile[] getPuzzle() {
+		return puzzle;
+	}
+
+	public void setPuzzle(Tile[] puzzle) {
+		this.puzzle = puzzle;
+	}
+
 	/**
 	 * This method checks if a move is actually valid, according to the rules that
 	 * were given to us.A move can be valid if:
@@ -54,7 +71,7 @@ public class Puzzle {
 	 * @param to   The place of the other tile we want to move
 	 * @return true if the move is valid, otherwise false
 	 */
-	private boolean validMove(int from, int to) {
+	boolean validMove(int from, int to) {
 
 		if (from < 1 || from > size || to < 1 || to > size)
 			return false;
@@ -200,36 +217,20 @@ public class Puzzle {
 		return true;
 	}
 
-	/**
-	 * This method should calculate the possible moves from a state
-	 * 
-	 * TODO
-	 * 
-	 * @param fringe
-	 */
-	public void calculatePossibleMoves(ArrayList<Table> fringe) {
-		Puzzle temp;
-		for (int i = 0; i < size; i++)
-			for (int j = 0; j < size; j++) {
-				temp = this.duplicate();
-				if (i != j)
-					if (temp.validMove(i, j)) {
-						int c = temp.move(i, j);
-						c += aStar.heuristic(this);
-						Table t = new Table(temp.duplicate(), c);
-						fringe.add(t);
-					}
-			}
-		for (Table s : fringe)
-			s.puzzle.print();
+	@Override
+	public boolean equals(Object obj) {
 
+		Puzzle other = (Puzzle) obj;
+		if (!Arrays.equals(puzzle, other.puzzle))
+			return false;
+		return true;
 	}
 
 	public static void main(String[] args) {
 		Puzzle p = new Puzzle();
 		p.print();
 		ArrayList<Table> fringe = new ArrayList<Table>();
-		p.calculatePossibleMoves(fringe);
+		// p.calculatePossibleMoves(fringe);
 
 	}
 
