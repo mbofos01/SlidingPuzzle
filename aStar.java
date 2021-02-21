@@ -6,7 +6,7 @@ public class aStar {
 	public ArrayList<Table> fringe = new ArrayList<>();
 
 	public aStar() {
-		Puzzle a = new Puzzle(7);
+		Puzzle a = new Puzzle();
 		a.print();
 		fringe.add(new Table(a, 1));
 
@@ -41,7 +41,7 @@ public class aStar {
 	}
 
 	public void test() {
-		for (int i = 0; i > -1; i++) {
+		while (true) {
 			Table A = fringe.get(0);
 
 			Table t = new Table(A.puzzle.duplicate(), A.cost);
