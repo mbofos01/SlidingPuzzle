@@ -43,7 +43,7 @@ public class Table {
 						if (!temp.equals(table.puzzle) && doesntExist(fringe, table.puzzle)) { // decrease cost if the
 																								// table exists
 							c += aStar.heuristic(table.puzzle);
-							c += table.cost;
+							// c += table.cost;
 							Table t = new Table(temp.duplicate(), c);
 							fringe.add(t);
 						}
