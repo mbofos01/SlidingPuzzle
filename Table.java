@@ -33,13 +33,15 @@ public class Table {
 	 */
 	public static void calculatePossibleMoves(ArrayList<Table> fringe, Table table) {
 		Puzzle temp;
-		for (int i = 0; i < table.puzzle.getSize(); i++)
-			for (int j = 0; j < table.puzzle.getSize(); j++) {
+		for (int i = 1; i <= table.puzzle.getSize(); i++)
+			for (int j = 1; j <= table.puzzle.getSize(); j++) {
 				temp = table.puzzle.duplicate();
 				if (i != j)
 					if (temp.validMove(i, j)) {
 						int c = temp.move(i, j);
-						if (!temp.equals(table.puzzle) && doesntExist(fringe, table.puzzle)) {
+						// temp.print();
+						if (!temp.equals(table.puzzle) && doesntExist(fringe, table.puzzle)) { // decrease cost if the
+																								// table exists
 							c += aStar.heuristic(table.puzzle);
 							c += table.cost;
 							Table t = new Table(temp.duplicate(), c);
@@ -55,6 +57,14 @@ public class Table {
 			if (a.puzzle.equals(puzzle2))
 				return false;
 		return true;
+	}
+
+	public static void main(String[] args) {
+		ArrayList<Table> fringe = new ArrayList<Table>();
+		calculatePossibleMoves(fringe, new Table(new Puzzle(3), 1));
+		for (Table s : fringe)
+			s.puzzle.print();
+
 	}
 
 }
