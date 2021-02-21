@@ -1,5 +1,7 @@
 package epl341.SlidingPuzzle;
 
+import java.util.ArrayList;
+
 /**
  * The Puzzle object represents the actual sliding block puzzle according to the
  * rules given
@@ -196,6 +198,19 @@ public class Puzzle {
 			if (solution[i] != this.puzzle[i].getType())
 				return false;
 		return true;
+	}
+
+	/**
+	 * This method should calculate the possible moves from a state
+	 * 
+	 * TODO
+	 * 
+	 * @param fringe
+	 */
+	public void calculatePossibleMoves(ArrayList<Puzzle> fringe) {
+
+		// fringe.add(duplicate);
+
 	}
 
 	public static void main(String[] args) {
