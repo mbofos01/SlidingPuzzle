@@ -75,22 +75,31 @@ public class Puzzle {
 
 		if (from < 1 || from > size || to < 1 || to > size)
 			return false;
-
-		if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty())
-			return true;
-		else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty())
-			return true;
-		else if (Math.abs(from - to) == 2) {
-			if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty())
+		if (Math.abs(from - to) == 1) {
+			if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty()) {
+				// System.out.println("1");
 				return true;
-			else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty())
+			} else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty()) {
+				// System.out.println("2");
 				return true;
+			}
+		} else if (Math.abs(from - to) == 2) {
+			if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty()) {
+				// System.out.println("3");
+				return true;
+			} else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty()) {
+				// System.out.println("4");
+				return true;
+			}
 
 		} else if (Math.abs(from - to) == 3) {
-			if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty())
+			if (puzzle[from - 1].isMovable() && puzzle[to - 1].isEmpty()) {
+				// System.out.println("5");
 				return true;
-			else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty())
+			} else if (puzzle[to - 1].isMovable() && puzzle[from - 1].isEmpty()) {
+				// System.out.println("6");
 				return true;
+			}
 		}
 
 		return false;
@@ -197,8 +206,10 @@ public class Puzzle {
 	 */
 	public Puzzle duplicate() {
 		Puzzle copy = new Puzzle(size);
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++) {
 			copy.puzzle[i].setType(this.puzzle[i].getType());
+			copy.puzzle[i].setPlace(this.puzzle[i].getPlace());
+		}
 		return copy;
 
 	}
@@ -234,12 +245,11 @@ public class Puzzle {
 		Puzzle p = new Puzzle();
 		Puzzle pa = new Puzzle();
 		p.print();
-		pa.move(3, 4);
-		pa.move(4, 3);
-		pa.print();
-		if (p.equals(pa))
-			System.out.println("SAME");
-		// p.calculatePossibleMoves(fringe);
+
+		p.move(2, 4);
+		System.out.println(p.validMove(2, 7));
+		p.move(2, 7);
+		p.print();
 
 	}
 
