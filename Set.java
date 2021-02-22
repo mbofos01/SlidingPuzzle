@@ -26,7 +26,7 @@ public class Set {
 	}
 
 	public String toString() {
-		return " Swap tile number " + from + " with tile number " + to + " .";
+		return " Swap tile number " + from + " with tile number " + to;
 
 	}
 
