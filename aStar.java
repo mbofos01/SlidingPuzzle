@@ -7,7 +7,7 @@ public class aStar {
 	public ArrayList<Table> fringe = new ArrayList<>();
 
 	public aStar() {
-		Puzzle a = new Puzzle(5);
+		Puzzle a = new Puzzle();
 		a.print();
 		fringe.add(new Table(a, 1));
 		Table.calculatePossibleMoves(fringe, fringe.get(0));

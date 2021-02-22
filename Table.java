@@ -14,8 +14,8 @@ public class Table {
 	public int cost;
 	// static char[] solution = { 'W', 'W', 'W', 'W', 'W', 'B', 'B', 'B', 'B', 'B',
 	// 'E' };
-	// static char[] solution = { 'W', 'W', 'W', 'B', 'B', 'B', 'E' };
-	static char[] solution = { 'W', 'W', 'B', 'B', 'E' };
+	static char[] solution = { 'W', 'W', 'W', 'B', 'B', 'B', 'E' };
+	// static char[] solution = { 'W', 'W', 'B', 'B', 'E' };
 	private ArrayList<Set> steps;
 
 	public Table(Puzzle puzzle, int cost) {
