@@ -3,13 +3,13 @@ package epl341.SlidingPuzzle;
 import java.util.ArrayList;
 
 public class aStar {
+	
 	public ArrayList<Table> fringe = new ArrayList<>();
 
 	public aStar() {
 		Puzzle a = new Puzzle();
 		a.print();
 		fringe.add(new Table(a, 1));
-
 		Table.calculatePossibleMoves(fringe, fringe.get(0));
 
 	}
@@ -32,6 +32,24 @@ public class aStar {
 
 	}
 
+	public static int heuristic2(Puzzle p, char[] solution) {
+		int cost = 0;
+		for (int i = 0; i < p.getSize(); i++)
+			if (p.getPuzzle()[i].getType() != solution[i])
+				cost += Math.abs(findNearest(p.getPuzzle()[i].getType(),solution)-i);
+		return cost;
+	}
+	
+	
+
+	private static int findNearest(char type, char[] solution) {
+	    for(int i=0;i<solution.length;i++) {
+	    	if(type == solution[i])
+	    		return i;
+	    }
+		return 0;
+	}
+
 	public static int heuristic(Puzzle p) {
 		int cost = 0;
 		for (int i = 0; i < p.getSize() / 2; i++)
@@ -51,6 +69,7 @@ public class aStar {
 				A.puzzle.print();
 				return;
 			}
+			
 			Table.calculatePossibleMoves(fringe, t);
 			fringe.remove(0);
 			t.cost = 100;
@@ -61,6 +80,7 @@ public class aStar {
 
 	public static void main(String[] args) {
 		System.out.println("Start:");
+		
 		aStar star = new aStar();
 		star.test();
 

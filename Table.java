@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class Table {
 	public Puzzle puzzle;
 	public int cost;
+    static char[] solution = {'W','W','W','W','W','B','B','B','B','B','E'};
+	
 
 	public Table(Puzzle puzzle, int cost) {
 		this.puzzle = puzzle;
@@ -27,7 +29,7 @@ public class Table {
 	/**
 	 * This method should calculate the possible moves from a state
 	 * 
-	 * 
+	 * TODO
 	 * 
 	 * @param fringe
 	 */
@@ -38,7 +40,8 @@ public class Table {
 				temp = table.puzzle.duplicate();
 				if (temp.validMove(i, j)) {
 					int c = temp.move(i, j);
-					c+=aStar.heuristic(temp);
+					c+= aStar.heuristic2(temp,solution);
+					//c+= aStar.heuristic(temp);
 					// temp.print();
 					Puzzle s = temp.duplicate();
 					// fringe.add(new Table(s, 0));
@@ -59,6 +62,13 @@ public class Table {
 				return true;
 			}
 		return false;
+	}
+
+	private static Table find(ArrayList<Table> fringe, Puzzle puzzle2) {
+		for (Table a : fringe)
+			if (a.puzzle.equals(puzzle2))
+				return a;
+		return null;
 	}
 
 	public static void main(String[] args) {
