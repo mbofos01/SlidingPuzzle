@@ -12,12 +12,19 @@ import java.util.ArrayList;
 public class Table {
 	public Puzzle puzzle;
 	public int cost;
-    static char[] solution = {'W','W','W','W','W','B','B','B','B','B','E'};
-	
+	static char[] solution = { 'W', 'W', 'W', 'W', 'W', 'B', 'B', 'B', 'B', 'B', 'E' };
+	private ArrayList<Set> steps = new ArrayList<>();
 
 	public Table(Puzzle puzzle, int cost) {
 		this.puzzle = puzzle;
 		this.cost = cost;
+	}
+
+	public Table(Puzzle puzzle, int cost, ArrayList<Set> sets) {
+		this.puzzle = puzzle;
+		this.cost = cost;
+		for (int i = 0; i < sets.size(); i++)
+			steps.add(sets.get(i));
 	}
 
 	public void debbug() {
@@ -40,18 +47,27 @@ public class Table {
 				temp = table.puzzle.duplicate();
 				if (temp.validMove(i, j)) {
 					int c = temp.move(i, j);
-					c+= aStar.heuristic2(temp,solution);
-					//c+= aStar.heuristic(temp);
+					c += aStar.heuristic2(temp, solution);
+					// c+= aStar.heuristic(temp);
 					// temp.print();
 					Puzzle s = temp.duplicate();
 					// fringe.add(new Table(s, 0));
 					// System.out.println(exists(fringe, s));
 					if (exists(fringe, s)) {
 						// System.out.println("exists(fringe, s)");
-					} else
-						fringe.add(new Table(s, c));
+					} else {
+						Table f = new Table(s, c, table.steps);
+						f.steps.add(new Set(i, j));
+						fringe.add(f);
+					}
 				}
 			}
+
+	}
+
+	public void printSetps() {
+		for (int i = 0; i < steps.size(); i++)
+			System.out.println("Step " + i + ")" + steps.get(i));
 
 	}
 
@@ -72,10 +88,6 @@ public class Table {
 	}
 
 	public static void main(String[] args) {
-		ArrayList<Table> fringe = new ArrayList<Table>();
-		calculatePossibleMoves(fringe, new Table(new Puzzle(5), 1));
-		for (Table s : fringe)
-			s.debbug();
 
 	}
 

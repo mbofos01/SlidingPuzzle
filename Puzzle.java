@@ -17,7 +17,6 @@ public class Puzzle {
 	private int size;
 	private Tile[] puzzle;
 
-
 	/**
 	 * The constructor needs only the size of the puzzle, the tiles are always
 	 * placed by the same principle
@@ -41,9 +40,8 @@ public class Puzzle {
 	 * The default setup we will use is a 7-placed puzzle.
 	 */
 	public Puzzle() {
-		this(11);
+		this(7);
 	}
-
 
 	public int getSize() {
 		return size;
@@ -232,7 +230,7 @@ public class Puzzle {
 	}
 
 	public static void main(String[] args) {
-		
+
 		Puzzle p = new Puzzle();
 		Puzzle pa = new Puzzle();
 		p.print();
