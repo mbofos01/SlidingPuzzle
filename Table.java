@@ -68,7 +68,8 @@ public class Table {
 						Table new_table = find(fringe, s);
 						if (new_table.cost > c) {
 							new_table.cost = c;
-							new_table.steps = table.steps; // fringe.remove(new_table);
+							new_table.steps = new ArrayList<>();
+							new_table.addSteps(table.steps); // fringe.remove(new_table);
 							new_table.steps.add(new Set(i, j));
 
 						}
@@ -81,6 +82,11 @@ public class Table {
 				}
 			}
 
+	}
+
+	private void addSteps(ArrayList<Set> sets) {
+		for (int i = 0; i < sets.size(); i++)
+			steps.add(sets.get(i));
 	}
 
 	public void printSetps() {
