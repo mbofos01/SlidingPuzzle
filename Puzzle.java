@@ -247,9 +247,16 @@ public class Puzzle {
 		p.print();
 
 		p.move(2, 4);
-		System.out.println(p.validMove(2, 7));
-		p.move(2, 7);
+		p.move(2, 5);
+		p.move(5, 7);
+		p.move(4, 7);
+		p.move(1, 4);
+		p.move(1, 2);
+		p.move(2, 5);
+
 		p.print();
+		System.out.println(p.validMove(3, 6));
+		p.move(3, 6);
 
 	}
 

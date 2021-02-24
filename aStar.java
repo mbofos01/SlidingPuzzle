@@ -7,8 +7,17 @@ public class aStar {
 	public ArrayList<Table> fringe = new ArrayList<>();
 
 	public aStar() {
+		Puzzle a = new Puzzle(7);
+		a.print();
+		fringe.add(new Table(a, 1));
+		Table.calculatePossibleMoves(fringe, fringe.get(0));
+
+	}
+
+	public aStar(char[] array) {
 		Puzzle a = new Puzzle();
 		a.print();
+		Table.solution = array;
 		fringe.add(new Table(a, 1));
 		Table.calculatePossibleMoves(fringe, fringe.get(0));
 
@@ -67,6 +76,29 @@ public class aStar {
 				System.out.println("Solution:");
 				A.puzzle.print();
 				A.printSetps();
+				System.out.println("Cost: " + A.cost);
+				return;
+
+			}
+			Table.calculatePossibleMoves(fringe, fringe.get(0));
+			fringe.remove(0);
+			fringe.add(t);
+			sort();
+
+		}
+	}
+
+	public void check() {
+		while (true) {
+			Table A = fringe.get(0);
+			// A.printSetps();
+
+			Table t = new Table(A.puzzle.duplicate(), A.cost);
+
+			if (A.puzzle.same(Table.solution)) {
+				System.out.println("Solution:");
+				A.puzzle.print();
+				A.printSetps();
 				return;
 			}
 			Table.calculatePossibleMoves(fringe, fringe.get(0));
@@ -79,9 +111,11 @@ public class aStar {
 
 	public static void main(String[] args) {
 		System.out.println("Start:");
-
-		aStar star = new aStar();
-		star.test();
+		char[] sol = { 'W', 'W', 'W', 'E', 'B', 'B', 'B' };
+		aStar star = new aStar(sol);
+		long millis = System.currentTimeMillis();
+		star.check();
+		System.out.println("Time needed: " + (System.currentTimeMillis() - millis) * 1.0 / 1000 + " seconds.");
 
 	}
 

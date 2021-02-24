@@ -49,6 +49,7 @@ public class Table {
 	 */
 	public static void calculatePossibleMoves(ArrayList<Table> fringe, Table table) {
 		Puzzle temp;
+		int cny = 1;
 		for (int i = 1; i <= table.puzzle.getSize(); i++)
 			for (int j = 1; j <= table.puzzle.getSize(); j++) {
 				temp = table.puzzle.duplicate();
@@ -63,7 +64,15 @@ public class Table {
 					// fringe.add(new Table(s, 0));
 					// System.out.println(exists(fringe, s));
 					if (exists(fringe, s)) {
-						// System.out.println("exists(fringe, s)");
+
+						Table new_table = find(fringe, s);
+						if (new_table.cost > c) {
+							new_table.cost = c;
+							new_table.steps = table.steps; // fringe.remove(new_table);
+							new_table.steps.add(new Set(i, j));
+
+						}
+
 					} else {
 						Table f = new Table(s, c, table.steps);
 						f.steps.add(new Set(i, j));
@@ -108,21 +117,10 @@ public class Table {
 		calculatePossibleMoves(fringe, table);
 		calculatePossibleMoves(fringe, fringe.get(1));
 		calculatePossibleMoves(fringe, fringe.get(7));
-		// fringe.get(10).puzzle.print();
-		// fringe.get(10).printSetps();
 		calculatePossibleMoves(fringe, fringe.get(10));
-		// fringe.get(12).puzzle.print();
-		// fringe.get(12).printSetps();
-
 		calculatePossibleMoves(fringe, fringe.get(12));
-		// fringe.get(15).puzzle.print();
-		// fringe.get(15).printSetps();
 		calculatePossibleMoves(fringe, fringe.get(15));
-		// fringe.get(17).puzzle.print();
-		// fringe.get(17).printSetps();
 		calculatePossibleMoves(fringe, fringe.get(17));
-		// fringe.get(19).puzzle.print();
-		// fringe.get(19).printSetps();
 		calculatePossibleMoves(fringe, fringe.get(19));
 		fringe.get(21).puzzle.print();
 		fringe.get(21).printSetps();
