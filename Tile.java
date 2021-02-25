@@ -6,7 +6,8 @@ package epl341.SlidingPuzzle;
  *
  * 
  * @author mbofos01
- *
+ * @author enicol09
+ * 
  */
 public class Tile {
 	/**

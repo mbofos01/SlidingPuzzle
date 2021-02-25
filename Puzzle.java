@@ -1,14 +1,11 @@
 package epl341.SlidingPuzzle;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * The Puzzle object represents the actual sliding block puzzle according to the
  * rules given
  * 
  * @author mbofos01
- *
+ * @author enicol09
  */
 public class Puzzle {
 	/**
@@ -43,18 +40,38 @@ public class Puzzle {
 		this(7);
 	}
 
+	/**
+	 * Getter method for size
+	 * 
+	 * @return size
+	 */
 	public int getSize() {
 		return size;
 	}
 
+	/**
+	 * Setter method for size
+	 * 
+	 * @param size
+	 */
 	public void setSize(int size) {
 		this.size = size;
 	}
 
+	/**
+	 * Getter method for puzzle
+	 * 
+	 * @return puzzle
+	 */
 	public Tile[] getPuzzle() {
 		return puzzle;
 	}
 
+	/**
+	 * Setter method for puzzle
+	 * 
+	 * @param puzzle
+	 */
 	public void setPuzzle(Tile[] puzzle) {
 		this.puzzle = puzzle;
 	}
@@ -228,36 +245,16 @@ public class Puzzle {
 		return true;
 	}
 
+	/**
+	 * Typical equals method that checks the type of each tile
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		// System.out.println("CHECKING");
 		Puzzle other = (Puzzle) obj;
-		for (int i = 0; i < size; i++) {
-			// System.out.println(puzzle[i].getType() + " " + other.puzzle[i].getType());
+		for (int i = 0; i < size; i++)
 			if (puzzle[i].getType() != other.puzzle[i].getType())
 				return false;
-		}
 		return true;
-	}
-
-	public static void main(String[] args) {
-
-		Puzzle p = new Puzzle();
-		Puzzle pa = new Puzzle();
-		p.print();
-
-		p.move(2, 4);
-		p.move(2, 5);
-		p.move(5, 7);
-		p.move(4, 7);
-		p.move(1, 4);
-		p.move(1, 2);
-		p.move(2, 5);
-
-		p.print();
-		System.out.println(p.validMove(3, 6));
-		p.move(3, 6);
-
 	}
 
 }

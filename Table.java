@@ -7,17 +7,27 @@ import java.util.ArrayList;
  * be an arraylist of tables
  * 
  * @author mbofos01
+ * @author enicol09
  *
  */
 public class Table {
+	/**
+	 * A table is defined by a puzzle state, its cost and the path used to get
+	 * there.
+	 */
 	public Puzzle puzzle;
 	public int cost;
-	// static char[] solution = { 'W', 'W', 'W', 'W', 'W', 'B', 'B', 'B', 'B', 'B',
-	// 'E' };
-	static char[] solution = { 'W', 'W', 'W', 'B', 'B', 'B', 'E' };
-	// static char[] solution = { 'W', 'W', 'B', 'B', 'E' };
+	static char[] solution;
 	private ArrayList<Set> steps;
 
+	/**
+	 * This constructor is used to create a new table, most of the times for the
+	 * starting state, so we set the first step to an illegal value, which we don't
+	 * use
+	 * 
+	 * @param puzzle current state
+	 * @param cost   current states' cost
+	 */
 	public Table(Puzzle puzzle, int cost) {
 		this.puzzle = puzzle;
 		this.cost = cost;
@@ -25,15 +35,24 @@ public class Table {
 		steps.add(new Set(-1, -1));
 	}
 
+	/**
+	 * This constructor basically updates a state
+	 * 
+	 * @param puzzle current state
+	 * @param cost   current states' cost
+	 * @param sets   current states' path
+	 */
 	public Table(Puzzle puzzle, int cost, ArrayList<Set> sets) {
 		this.puzzle = puzzle;
 		this.cost = cost;
 		steps = new ArrayList<>();
-		// System.out.println("SIZE: " + sets.size());
 		for (int i = 0; i < sets.size(); i++)
 			steps.add(sets.get(i));
 	}
 
+	/**
+	 * This method was used to debbug some functions. It prints the cost of a state
+	 */
 	public void debbug() {
 		System.out.println("Cost: " + cost);
 		puzzle.print();
@@ -41,35 +60,30 @@ public class Table {
 	}
 
 	/**
-	 * This method should calculate the possible moves from a state
+	 * This method calculates all the possible moves from a state, if a new state
+	 * already exists, we use the one with the lowest cost, and update costs and
+	 * paths
 	 * 
-	 * TODO
 	 * 
-	 * @param fringe
+	 * @param fringe an arraylist that holds the possible states
+	 * @param table  current state
 	 */
 	public static void calculatePossibleMoves(ArrayList<Table> fringe, Table table) {
 		Puzzle temp;
-		int cny = 1;
 		for (int i = 1; i <= table.puzzle.getSize(); i++)
 			for (int j = 1; j <= table.puzzle.getSize(); j++) {
 				temp = table.puzzle.duplicate();
-				// temp.print();
 				if (temp.validMove(i, j)) {
-					// System.out.println("Valid Move: ( " + i + " , " + j + " )");
 					int c = temp.move(i, j);
-					c += aStar.heuristic2(temp, solution);
-					// c+= aStar.heuristic(temp);
-					// temp.print();
+					c += aStar.heuristic(temp, solution);
 					Puzzle s = temp.duplicate();
-					// fringe.add(new Table(s, 0));
-					// System.out.println(exists(fringe, s));
 					if (exists(fringe, s)) {
 
 						Table new_table = find(fringe, s);
 						if (new_table.cost > c) {
 							new_table.cost = c;
 							new_table.steps = new ArrayList<>();
-							new_table.addSteps(table.steps); // fringe.remove(new_table);
+							new_table.addSteps(table.steps);
 							new_table.steps.add(new Set(i, j));
 
 						}
@@ -84,52 +98,52 @@ public class Table {
 
 	}
 
+	/**
+	 * This method adds steps to a path of a state
+	 * 
+	 * @param sets new steps we need to add to a states path
+	 */
 	private void addSteps(ArrayList<Set> sets) {
 		for (int i = 0; i < sets.size(); i++)
 			steps.add(sets.get(i));
 	}
 
+	/**
+	 * This method prints the path of a state
+	 */
 	public void printSetps() {
 		for (int i = 1; i < steps.size(); i++)
 			System.out.println("Step " + (i + 0) + ")" + steps.get(i));
 
 	}
 
+	/**
+	 * This function checks if a puzzle state exists in a table arraylist
+	 * 
+	 * @param fringe  a list of states
+	 * @param puzzle2 a puzzle state
+	 * @return true if this state exists
+	 */
 	private static boolean exists(ArrayList<Table> fringe, Puzzle puzzle2) {
 		for (Table a : fringe)
-			if (puzzle2.equals(a.puzzle)) {
-				// puzzle2.print();
+			if (puzzle2.equals(a.puzzle))
 				return true;
-			}
+
 		return false;
 	}
 
+	/**
+	 * This function finds a specific puzzle state in a table arraylist
+	 * 
+	 * @param fringe  a list of states
+	 * @param puzzle2 a puzzle state
+	 * @return the same puzzle state (same according to the placement of the tiles)
+	 */
 	private static Table find(ArrayList<Table> fringe, Puzzle puzzle2) {
 		for (Table a : fringe)
 			if (a.puzzle.equals(puzzle2))
 				return a;
 		return null;
-	}
-
-	public static void main(String[] args) {
-		Puzzle puzzle = new Puzzle();
-		int cost = 1;
-		ArrayList<Set> list = new ArrayList<>();
-		Set set = new Set(1, 10);
-		list.add(set);
-		Table table = new Table(puzzle, cost, list);
-		table.printSetps();
-		ArrayList<Table> fringe = new ArrayList<Table>();
-		calculatePossibleMoves(fringe, table);
-		calculatePossibleMoves(fringe, fringe.get(1));
-		calculatePossibleMoves(fringe, fringe.get(7));
-		calculatePossibleMoves(fringe, fringe.get(10));
-		calculatePossibleMoves(fringe, fringe.get(12));
-		calculatePossibleMoves(fringe, fringe.get(15));
-		calculatePossibleMoves(fringe, fringe.get(17));
-		calculatePossibleMoves(fringe, fringe.get(19));
-		fringe.get(21).puzzle.print();
-		fringe.get(21).printSetps();
 	}
 
 }
