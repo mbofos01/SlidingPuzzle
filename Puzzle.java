@@ -34,6 +34,22 @@ public class Puzzle {
 	}
 
 	/**
+	 * The constructor needs only the size of the puzzle, the tiles are always
+	 * placed according to the demo array
+	 * 
+	 * @param size An integer bigger than three
+	 */
+	public Puzzle(int size, char[] demo) {
+		this.size = size;
+		puzzle = new Tile[size];
+		int i = 0;
+		for (i = 1; i <= size; i++) {
+			puzzle[i - 1] = new Tile(i, demo[i - 1]);
+		}
+
+	}
+
+	/**
 	 * The default setup we will use is a 7-placed puzzle.
 	 */
 	public Puzzle() {

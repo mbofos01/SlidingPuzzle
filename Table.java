@@ -76,6 +76,38 @@ public class Table {
 				if (temp.validMove(i, j)) {
 					int c = temp.move(i, j);
 					c += aStar.heuristic(temp, solution);
+					// c += aStar.heuristic_old(temp);
+					Puzzle s = temp.duplicate();
+					if (exists(fringe, s)) {
+
+						Table new_table = find(fringe, s);
+						if (new_table.cost > c) {
+							new_table.cost = c;
+							new_table.steps = new ArrayList<>();
+							new_table.addSteps(table.steps);
+							new_table.steps.add(new Set(i, j));
+
+						}
+
+					} else {
+						Table f = new Table(s, c, table.steps);
+						f.steps.add(new Set(i, j));
+						fringe.add(f);
+					}
+				}
+			}
+
+	}
+
+	public static void calculatePossibleMoves2(ArrayList<Table> fringe, Table table) {
+		Puzzle temp;
+		for (int i = table.puzzle.getSize(); i > 0; i--)
+			for (int j = 1; j <= table.puzzle.getSize(); j++) {
+				temp = table.puzzle.duplicate();
+				if (temp.validMove(i, j)) {
+					int c = temp.move(i, j);
+					// c += aStar.heuristic(temp, solution);
+					c += aStar.heuristic_old(temp);
 					Puzzle s = temp.duplicate();
 					if (exists(fringe, s)) {
 

@@ -20,6 +20,7 @@ public class aStar {
 	 * find a solution for the sliding puzzle problem
 	 */
 	public aStar() {
+
 		Puzzle a = new Puzzle(7);
 		a.print();
 		fringe.add(new Table(a, 1));
@@ -32,8 +33,8 @@ public class aStar {
 	 * 
 	 * @param array the solution we want to find (end state)
 	 */
-	public aStar(char[] array) {
-		Puzzle a = new Puzzle(7);
+	public aStar(char[] array, char[] demo) {
+		Puzzle a = new Puzzle(7, demo);
 		a.print();
 		Table.solution = array;
 		fringe.add(new Table(a, 1));
@@ -73,7 +74,7 @@ public class aStar {
 		int cost = 0;
 		for (int i = 0; i < p.getSize(); i++)
 			if (p.getPuzzle()[i].getType() != solution[i])
-				cost += Math.abs(findNearest(p.getPuzzle()[i].getType(), solution) - i);
+				cost += 1;// Math.abs(findNearest(p.getPuzzle()[i].getType(), solution) - i);
 		return cost;
 	}
 
@@ -163,10 +164,12 @@ public class aStar {
 	public static void main(String[] args) {
 		System.out.println("Start:");
 		char[] sol = new char[7];
+		char[] demo = new char[7];
 		try {
 			int size = args[0].length();
 			for (int i = 0; i < size; i++)
 				sol[i] = args[0].charAt(i);
+
 		} catch (Exception e) {
 			sol[0] = 'W';
 			sol[1] = 'W';
@@ -177,7 +180,21 @@ public class aStar {
 			sol[6] = 'B';
 
 		}
-		aStar star = new aStar(sol);
+		try {
+			int size = args[1].length();
+			for (int i = 0; i < size; i++)
+				demo[i] = args[1].charAt(i);
+		} catch (Exception e) {
+			demo[0] = 'B';
+			demo[1] = 'B';
+			demo[2] = 'B';
+			demo[3] = 'W';
+			demo[4] = 'W';
+			demo[5] = 'W';
+			demo[6] = 'E';
+
+		}
+		aStar star = new aStar(sol, demo);
 		long millis = System.currentTimeMillis();
 		star.solve();
 		System.out.println("Time needed: " + (System.currentTimeMillis() - millis) * 1.0 / 1000 + " seconds.");
