@@ -74,7 +74,7 @@ public class aStar {
 		int cost = 0;
 		for (int i = 0; i < p.getSize(); i++)
 			if (p.getPuzzle()[i].getType() != solution[i])
-				cost += 1;// Math.abs(findNearest(p.getPuzzle()[i].getType(), solution) - i);
+				cost += Math.abs(findNearest(p.getPuzzle()[i].getType(), solution) - i);
 		return cost;
 	}
 
