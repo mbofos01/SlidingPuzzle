@@ -65,10 +65,11 @@ public class Table {
 	 * paths
 	 * 
 	 * 
-	 * @param fringe an arraylist that holds the possible states
-	 * @param table  current state
+	 * @param fringe   an arraylist that holds the possible states
+	 * @param expanded an arraylist that holds the expanded states
+	 * @param table    current state
 	 */
-	public static void calculatePossibleMoves(ArrayList<Table> fringe, Table table) {
+	public static void calculatePossibleMoves(ArrayList<Table> fringe, ArrayList<Table> expanded, Table table) {
 		Puzzle temp;
 		for (int i = 1; i <= table.puzzle.getSize(); i++)
 			for (int j = 1; j <= table.puzzle.getSize(); j++) {
@@ -78,27 +79,40 @@ public class Table {
 					c += aStar.heuristic(temp, solution);
 					// c += aStar.heuristic_old(temp);
 					Puzzle s = temp.duplicate();
-					if (exists(fringe, s)) {
+					if (!exists(expanded, s)) {
+						if (exists(fringe, s)) {
 
-						Table new_table = find(fringe, s);
-						if (new_table.cost > c) {
-							new_table.cost = c;
-							new_table.steps = new ArrayList<>();
-							new_table.addSteps(table.steps);
-							new_table.steps.add(new Set(i, j));
+							Table new_table = find(fringe, s);
+							if (new_table.cost > c) {
+								new_table.cost = c;
+								new_table.steps = new ArrayList<>();
+								new_table.addSteps(table.steps);
+								new_table.steps.add(new Set(i, j));
 
+							}
+
+						} else {
+							Table f = new Table(s, c, table.steps);
+							f.steps.add(new Set(i, j));
+							fringe.add(f);
 						}
-
-					} else {
-						Table f = new Table(s, c, table.steps);
-						f.steps.add(new Set(i, j));
-						fringe.add(f);
 					}
 				}
 			}
 
 	}
 
+	/**
+	 * This method calculates all the possible moves from a state, if a new state
+	 * already exists, we use the one with the lowest cost, and update costs and
+	 * paths
+	 * 
+	 * NOTE:uses the old heuristic
+	 * 
+	 * @param fringe   an arraylist that holds the possible states
+	 * @param expanded an arraylist that holds the expanded states
+	 * @param table    current state
+	 */
 	public static void calculatePossibleMoves2(ArrayList<Table> fringe, Table table) {
 		Puzzle temp;
 		for (int i = table.puzzle.getSize(); i > 0; i--)

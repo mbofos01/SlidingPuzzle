@@ -11,9 +11,10 @@ import java.util.ArrayList;
  */
 public class aStar {
 	/**
-	 * A* object is defined only by a fringe
+	 * A* object is defined only by a fringe and a list of expanded states
 	 */
 	public ArrayList<Table> fringe = new ArrayList<>();
+	public ArrayList<Table> expanded = new ArrayList<>();
 
 	/**
 	 * This constructor is not used in our project, it would be used if we wanted to
@@ -24,7 +25,7 @@ public class aStar {
 		Puzzle a = new Puzzle(7);
 		a.print();
 		fringe.add(new Table(a, 1));
-		Table.calculatePossibleMoves(fringe, fringe.get(0));
+		Table.calculatePossibleMoves(fringe, expanded, fringe.get(0));
 
 	}
 
@@ -38,7 +39,7 @@ public class aStar {
 		a.print();
 		Table.solution = array;
 		fringe.add(new Table(a, 1));
-		Table.calculatePossibleMoves(fringe, fringe.get(0));
+		Table.calculatePossibleMoves(fringe, expanded, fringe.get(0));
 
 	}
 
@@ -64,7 +65,9 @@ public class aStar {
 	}
 
 	/**
-	 * TODO @elia
+	 * This is our final heuristic. 1. Based on our desired result we check how many
+	 * positions the respective state tile is from the desired position of the tile.
+	 * 2. The cost is equal to how far it is from the desired location.
 	 * 
 	 * @param p
 	 * @param solution
@@ -79,10 +82,11 @@ public class aStar {
 	}
 
 	/**
-	 * TODO @elia
+	 * This function tries to find the nearest same type value with the given type
+	 * from the solution.
 	 * 
-	 * @param type
-	 * @param solution
+	 * @param type     type of Tile
+	 * @param solution an array of tiles of the solution
 	 * @return
 	 */
 	private static int findNearest(char type, char[] solution) {
@@ -125,7 +129,8 @@ public class aStar {
 				return;
 
 			}
-			Table.calculatePossibleMoves(fringe, fringe.get(0));
+			Table.calculatePossibleMoves(fringe, expanded, fringe.get(0));
+			expanded.add(fringe.get(0));
 			fringe.remove(0);
 			fringe.add(t);
 			sort();
@@ -145,9 +150,11 @@ public class aStar {
 				System.out.println("Solution:");
 				A.puzzle.print();
 				A.printSetps();
+
 				return;
 			}
-			Table.calculatePossibleMoves(fringe, fringe.get(0));
+			Table.calculatePossibleMoves(fringe, expanded, fringe.get(0));
+			expanded.add(fringe.get(0));
 			fringe.remove(0);
 			fringe.add(t);
 			sort();
